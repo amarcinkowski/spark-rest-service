@@ -4,33 +4,55 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * The Class Company.
  */
 public class Company {
+	
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	private static final String PHONE_NUMBER_PATTERN =
+			"[0-9 \\(\\)\\+]{9,14}";
 
 	/** The company id. */
+	@NotNull
 	private Long companyID;
 
 	/** The name. */
+	@NotBlank(message="Name is mandatory")
 	private String name;
 
 	/** The address. */
+	@NotBlank(message="Address is mandatory")
 	private String address;
 
 	/** The city. */
+	@NotBlank(message="City is mandatory")
 	private String city;
 
 	/** The country. */
+	@NotBlank(message="Country is mandatory")
 	private String country;
 
 	/** The e­mail (not required). */
+	@Email(regexp=EMAIL_PATTERN,message="Wrong email format")
 	private String e­mail;
 
 	/** The phone number (not required). */
+	@Pattern(regexp=PHONE_NUMBER_PATTERN,message="Wrong phone format")
 	private String phoneNumber;
 
 	/** The beneficial owners. */
+	@NotEmpty
 	Set<String> beneficialOwner = new HashSet<>();
 
 	/**
@@ -198,6 +220,15 @@ public class Company {
 	public Company addBeneficialOwner(String beneficialOwner) {
 		this.beneficialOwner.add(beneficialOwner);
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(companyID);
+		buffer.append("|");
+		buffer.append(name);
+		return super.toString();
 	}
 
 }

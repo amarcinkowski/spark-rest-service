@@ -34,64 +34,36 @@ public class CompanyService {
 	}
 
 	/**
-	 * Creates the company.
+	 * Adds the company.
 	 *
-	 * @param name
-	 *            the name
-	 * @param address
-	 *            the address
-	 * @param city
-	 *            the city
-	 * @param country
-	 *            the country
-	 * @param e­mail
-	 *            the e­mail
-	 * @param phoneNumber
-	 *            the phone number
-	 * @return the company
+	 * @param company
+	 *            the company
+	 * @throws AlreadyExistsException
+	 *             the already exists exception if companyId already registered
+	 *             (should use update instead of add new)
 	 */
-	public Company createCompany(String name, String address, String city, String country, String e­mail,
-			String phoneNumber) {
-		Company c = new Company();
-		c.setName(name);
-		c.setAddress(address);
-		c.setCity(city);
-		c.setCountry(country);
-		c.setE­mail(e­mail);
-		c.setPhoneNumber(phoneNumber);
-		companies.put(c.getCompanyID(), c);
-		return c;
+	public Company addNewCompany(Company company) throws AlreadyExistsException {
+		if (companies.put(company.getCompanyID(), company) != null) {
+			throw new AlreadyExistsException("Company under ID already exist (please update instead of add)");
+		}
+		return company;
 	}
 
 	/**
 	 * Update company.
 	 *
-	 * @param companyID
-	 *            the company id
-	 * @param name
-	 *            the name
-	 * @param address
-	 *            the address
-	 * @param city
-	 *            the city
-	 * @param country
-	 *            the country
-	 * @param e­mail
-	 *            the e­mail
-	 * @param phoneNumber
-	 *            the phone number
-	 * @return the company
+	 * @param company
+	 *            the company
+	 * @throws CannotUpdateException
+	 *             the cannot update exception (it may not exist)
 	 */
-	public Company updateCompany(Long companyID, String name, String address, String city, String country,
-			String e­mail, String phoneNumber) {
-		Company c = companies.get(companyID);
-		c.setName(name);
-		c.setAddress(address);
-		c.setCity(city);
-		c.setCountry(country);
-		c.setE­mail(e­mail);
-		c.setPhoneNumber(phoneNumber);
-		return companies.put(c.getCompanyID(), c);
+	public Company updateCompany(Company company) throws CannotUpdateException {
+
+		if (!companies.containsKey(company.getCompanyID())) {
+			throw new CannotUpdateException("There's no Company with this ID");
+		}
+		companies.put(company.getCompanyID(), company);
+		return company;
 	}
 
 	/**
@@ -102,8 +74,13 @@ public class CompanyService {
 	 * @param name
 	 *            the name
 	 * @return the company
+	 * @throws CannotUpdateException
 	 */
-	public Company addBeneficialOwner(Long companyID, String name) {
-		return companies.get(companyID).addBeneficialOwner(name);
+	public void addBeneficialOwner(Long companyID, String name) throws CannotUpdateException {
+		Company c = companies.get(companyID);
+		if (c == null) {
+			throw new CannotUpdateException("There's no Company with this ID");
+		}
+		c.addBeneficialOwner(name);
 	}
 }
