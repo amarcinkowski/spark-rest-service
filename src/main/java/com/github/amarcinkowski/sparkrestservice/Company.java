@@ -16,10 +16,12 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class Company {
 	
+	/** The Constant EMAIL_PATTERN. */
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+	/** The Constant PHONE_NUMBER_PATTERN. */
 	private static final String PHONE_NUMBER_PATTERN =
 			"[0-9 \\(\\)\\+]{9,14}";
 
@@ -216,12 +218,18 @@ public class Company {
 
 	/**
 	 * Adds the beneficial owner.
+	 *
+	 * @param beneficialOwner the beneficial owner
+	 * @return the company
 	 */
 	public Company addBeneficialOwner(String beneficialOwner) {
 		this.beneficialOwner.add(beneficialOwner);
 		return this;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();

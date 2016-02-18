@@ -5,13 +5,26 @@ import java.util.Set;
 
 import spark.Request;
 
+/**
+ * The Class CompanyBuilder.
+ */
 public class CompanyBuilder {
 
+	/** The c. */
 	private Company c;
 
+	/**
+	 * Instantiates a new company builder.
+	 */
 	public CompanyBuilder() {
 	}
 
+	/**
+	 * From request.
+	 *
+	 * @param req the req
+	 * @return the company builder
+	 */
 	public CompanyBuilder fromRequest(Request req) {
 		Company company = new Company();
 		company.setName(req.queryParams("name"));
@@ -28,6 +41,11 @@ public class CompanyBuilder {
 		return this;
 	}
 
+	/**
+	 * Builds the.
+	 *
+	 * @return the company
+	 */
 	public Company build() {
 		return this.c;
 	};
