@@ -1,6 +1,18 @@
 # spark-rest-service
 Rest Web Service with Spark Framework
 
+## Json
+```json
+{
+  
+  "name": "IT Services",
+  "address" : "Armii Krajowej 41",
+  "city": "Kalisz",
+  "country" : "Poland",
+  "phone" : "+48 745634543",
+  "beneficialOwner" : ["Andrzej Marcinkowski", "Emil i Lönneberga", "Mary Poppins"]
+}
+```
 
 ## Development
 ### Tools used:
