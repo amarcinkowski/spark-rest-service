@@ -15,8 +15,13 @@ public class CompanyController {
 	 *            the company service
 	 */
 	public CompanyController(final CompanyService companyService) {
-		
+
 		get("/companies", (req, res) -> companyService.getAllCompanies(), json());
+
+		post("/companies",
+				(req, res) -> companyService.createCompany(req.queryParams("name"), req.queryParams("address"),
+						req.queryParams("city"), req.queryParams("country"), req.queryParams("e­mail"),
+						req.queryParams("phoneNumber")), json());
 
 		after((req, res) -> {
 			res.type("application/json");

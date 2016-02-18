@@ -1,6 +1,8 @@
 package com.github.amarcinkowski.sparkrestservice;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * The Class Company.
@@ -29,7 +31,14 @@ public class Company {
 	private String phoneNumber;
 
 	/** The beneficial owners. */
-	Set<String> beneficialOwner;
+	Set<String> beneficialOwner = new HashSet<>();
+
+	/**
+	 * Instantiates a new company.
+	 */
+	public Company() {
+		companyID = UUID.randomUUID().getLeastSignificantBits();
+	}
 
 	/**
 	 * Gets the company id.
@@ -177,10 +186,18 @@ public class Company {
 	 * Sets the beneficial owner.
 	 *
 	 * @param beneficialOwner
-	 *            the new beneficial owner
+	 *            the new beneficial owners
 	 */
 	public void setBeneficialOwner(Set<String> beneficialOwner) {
 		this.beneficialOwner = beneficialOwner;
+	}
+
+	/**
+	 * Adds the beneficial owner.
+	 */
+	public Company addBeneficialOwner(String beneficialOwner) {
+		this.beneficialOwner.add(beneficialOwner);
+		return this;
 	}
 
 }

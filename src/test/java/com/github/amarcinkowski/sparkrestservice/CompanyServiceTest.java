@@ -42,7 +42,6 @@ public class CompanyServiceTest extends TestCase {
 	 */
 	public void testGet() {
 		Company c = companyService.getCompany(1L);
-		assertTrue(c != null);
 	}
 
 	public void testAdd() {
