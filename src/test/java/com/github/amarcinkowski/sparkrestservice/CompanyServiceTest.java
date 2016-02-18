@@ -1,5 +1,7 @@
 package com.github.amarcinkowski.sparkrestservice;
 
+import org.junit.Before;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -28,11 +30,22 @@ public class CompanyServiceTest extends TestCase {
 		return new TestSuite(CompanyServiceTest.class);
 	}
 
+	@Before
+	public void before() {
+		companyService = new CompanyService();
+	}
+
+	CompanyService companyService;
+
 	/**
-	 * Test app.
+	 * Test get.
 	 */
 	public void testGet() {
-		CompanyService companyService = new CompanyService();
 		Company c = companyService.getCompany(1L);
+		assertTrue(c != null);
+	}
+
+	public void testAdd() {
+		companyService.createCompany("Animex", "5th Ave", "NYC", "USA", "office@animex.com", "+995425374");
 	}
 }
