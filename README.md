@@ -1,7 +1,7 @@
 # spark-rest-service
 Rest Web Service with Spark Framework
 
-## Json
+## JSON
 ```json
 {
   
