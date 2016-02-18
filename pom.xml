@@ -4,7 +4,7 @@
 
 	<groupId>com.github.amarcinkowski</groupId>
 	<artifactId>sparkrestservice</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>spark-rest-service</name>
@@ -16,6 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<github.maven.repository>file:///home/am/git/maven-repository/</github.maven.repository>
 	</properties>
 
 	<build>
@@ -31,4 +32,13 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<distributionManagement>
+		<repository>
+			<id>maven-repository</id>
+			<url>${github.maven.repository}</url>
+		</repository>
+	</distributionManagement>
+
 </project>
