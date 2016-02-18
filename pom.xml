@@ -4,20 +4,34 @@
 
 	<groupId>com.github.amarcinkowski</groupId>
 	<artifactId>sparkrestservice</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>spark-rest-service</name>
-	<url>http://maven.apache.org</url>
+	<url>http://github.com/amarcinkowski/spark-rest-service</url>
 
 	<scm>
 		<connection>scm:git:https://github.com/amarcinkowski/spark-rest-service.git</connection>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.maven.repository>file:///home/am/git/maven-repository/</github.maven.repository>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-core</artifactId>
+			<version>2.3</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
