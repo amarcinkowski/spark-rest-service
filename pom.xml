@@ -4,11 +4,16 @@
 
 	<groupId>com.github.amarcinkowski</groupId>
 	<artifactId>sparkrestservice</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>spark-rest-service</name>
 	<url>http://maven.apache.org</url>
+
+	<scm>
+		<connection>scm:git:https://github.com/amarcinkowski/spark-rest-service.git</connection>
+		<tag>sparkrestservice-0.0.1</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
