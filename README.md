@@ -10,7 +10,7 @@ Rest Web Service with Spark Framework
   "city": "Kalisz",
   "country" : "Poland",
   "phone" : "+48 745634543",
-  "beneficialOwner" : ["Andrzej Marcinkowski", "Emil i Lönneberga", "Mary Poppins"]
+  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
 }
 ```
 
