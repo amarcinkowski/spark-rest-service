@@ -2,6 +2,7 @@ package com.github.amarcinkowski.sparkrestservice;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -73,10 +74,8 @@ public class CompanyServiceTest {
 	@Test
 	public void testValidators() throws IOException {
 		TestResponse res = request("POST", JSON_NO_NAME);
-		// assertEquals(400, res.status);
-		// assertEquals("", res.body);
-		// System.out.println("json" + res.json());
-		System.out.println(res.body);
+		assertEquals(400, res.status);
+		assertTrue(res.body.contains("response code: 400"));
 	}
 
 	/**

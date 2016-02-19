@@ -7,6 +7,9 @@ import static spark.Spark.after;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 
 import static spark.Spark.*;
@@ -16,6 +19,7 @@ import static spark.Spark.*;
  */
 public class CompanyController {
 
+	private final static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 	/**
 	 * Instantiates a new company controller.
 	 *
@@ -38,7 +42,7 @@ public class CompanyController {
 
 		exception(Exception.class, (e, req, res) -> {
 			res.status(400);
-			System.err.println(e.getMessage());
+			logger.warn(e.getMessage());
 			res.body(new Gson().toJson(e.getMessage()));
 		});
 	}
