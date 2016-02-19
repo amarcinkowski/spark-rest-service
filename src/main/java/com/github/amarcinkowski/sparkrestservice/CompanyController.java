@@ -6,6 +6,8 @@ import static com.github.amarcinkowski.sparkrestservice.JsonUtil.json;
 import static spark.Spark.after;
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,9 @@ import static spark.Spark.*;
  */
 public class CompanyController {
 
+	/** The Constant logger. */
 	private final static Logger logger = LoggerFactory.getLogger(CompanyController.class);
+
 	/**
 	 * Instantiates a new company controller.
 	 *
@@ -27,6 +31,9 @@ public class CompanyController {
 	 *            the company service
 	 */
 	public CompanyController(final CompanyService companyService) {
+
+		port(Integer.valueOf(System.getenv("PORT")));
+		staticFileLocation("/public");
 
 		get("/companies", (req, res) -> companyService.getAllCompanies(), json());
 
