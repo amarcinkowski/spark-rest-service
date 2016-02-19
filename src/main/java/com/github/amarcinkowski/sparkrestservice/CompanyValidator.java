@@ -52,7 +52,7 @@ public class CompanyValidator {
 	 *            the req
 	 * @return the company
 	 */
-	public static Company parseAndValidate(Request req) {
+	public static Company parseAndValidate(Request req) throws ConstraintViolationException {
 		Company company = parse(req);
 		Set<ConstraintViolation<Company>> constraintViolations = validate(company);
 		if (constraintViolations.size() > 0) {
@@ -65,7 +65,8 @@ public class CompanyValidator {
 	/**
 	 * Gets the id.
 	 *
-	 * @param req the req
+	 * @param req
+	 *            the req
 	 * @return the id
 	 */
 	public static Long getId(Request req) {

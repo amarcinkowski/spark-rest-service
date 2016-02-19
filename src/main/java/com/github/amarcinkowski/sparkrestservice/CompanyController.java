@@ -6,7 +6,10 @@ import static com.github.amarcinkowski.sparkrestservice.JsonUtil.json;
 import static spark.Spark.after;
 import static spark.Spark.get;
 import static spark.Spark.post;
-import static spark.Spark.put;
+
+import com.google.gson.Gson;
+
+import static spark.Spark.*;
 
 /**
  * The Class CompanyController.
@@ -31,6 +34,12 @@ public class CompanyController {
 
 		after((req, res) -> {
 			res.type("application/json");
+		});
+
+		exception(Exception.class, (e, req, res) -> {
+			res.status(400);
+			System.err.println(e.getMessage());
+			res.body(new Gson().toJson(e.getMessage()));
 		});
 	}
 
