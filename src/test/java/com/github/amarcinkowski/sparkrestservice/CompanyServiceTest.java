@@ -24,8 +24,10 @@ import spark.utils.IOUtils;
  */
 public class CompanyServiceTest {
 
+	private final static String PORT = "4567";
+
 	/** The Constant URL. */
-	private static final String URL = "http://localhost:4567/companies";
+	private static final String URL = "http://localhost:" + PORT + "/companies";
 
 	/** The Constant JSON. */
 	public final static String JSON = "{\"name\": \"Andrzej Marcinkowski IT Services\","
@@ -45,7 +47,7 @@ public class CompanyServiceTest {
 	public static void beforeClass() {
 		Main.main(null);
 		try {
-			Thread.sleep(100);
+			Thread.sleep(150);
 		} catch (InterruptedException e) {
 		}
 	}

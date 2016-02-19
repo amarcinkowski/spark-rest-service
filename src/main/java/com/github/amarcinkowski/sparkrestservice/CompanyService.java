@@ -28,9 +28,13 @@ public class CompanyService {
 	 * @param id
 	 *            the id
 	 * @return the company
+	 * @throws NoSuchIdException 
 	 */
-	public Company getCompany(Long id) {
-		return companies.get(id);
+	public Company getCompany(Long id) throws NoSuchIdException  {
+		if (companies.containsKey(id)) {
+			return companies.get(id);
+		}
+		throw new NoSuchIdException("There is no company with this id");
 	}
 
 	/**
