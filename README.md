@@ -1,4 +1,5 @@
 # spark-rest-service
+[ travis ]
 Rest Web Service with Spark Framework
 
 ## JSON
@@ -22,3 +23,7 @@ Rest Web Service with Spark Framework
 
 ### Libraries
 * hibernate-validator
+
+## License
+
+The code is available under the [MIT license](LICENSE.txt).
