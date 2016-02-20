@@ -1,5 +1,5 @@
-# spark-rest-service
-[ travis ]
+# spark-rest-service [![Build Status](https://travis-ci.org/amarcinkowski/spark-rest-service.svg?branch=master)](https://travis-ci.org/amarcinkowski/spark-rest-service)
+
 Rest Web Service with Spark Framework
 
 ## JSON
