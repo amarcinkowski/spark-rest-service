@@ -8,6 +8,12 @@ import spark.ResponseTransformer;
  * The Class JsonUtil.
  */
 public class JsonUtil {
+	
+	/**
+	 * Private constructor.
+	 */
+	private JsonUtil() {
+	}
 
 	/**
 	 * To json.

@@ -154,13 +154,6 @@ public class CompanyServiceTest {
 			return new Gson().fromJson(body, HashMap.class);
 		}
 		
-		/* (non-Javadoc)
-		 * @see java.lang.Object#toString()
-		 */
-		@Override
-		public String toString() {
-			return status + body;
-		}
 	}
 
 }
