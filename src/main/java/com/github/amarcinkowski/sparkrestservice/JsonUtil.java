@@ -1,6 +1,8 @@
 package com.github.amarcinkowski.sparkrestservice;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.LongSerializationPolicy;
 
 import spark.ResponseTransformer;
 
@@ -8,31 +10,44 @@ import spark.ResponseTransformer;
  * The Class JsonUtil.
  */
 public class JsonUtil {
-	
+
+	private static Gson gson;
+
 	/**
 	 * Private constructor.
 	 */
 	private JsonUtil() {
 	}
 
+	private static Gson getGson() {
+		if (gson == null) {
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
+			gson = gsonBuilder.create();
+		}
+		return gson;
+	}
+
 	/**
 	 * To json.
 	 *
-	 * @param object the object
+	 * @param object
+	 *            the object
 	 * @return the string
 	 */
 	public static String toJson(Object object) {
-		return new Gson().toJson(object);
+		return getGson().toJson(object);
 	}
-	
+
 	/**
 	 * Parses the json.
 	 *
-	 * @param json the json
+	 * @param json
+	 *            the json
 	 * @return the company
 	 */
 	public static Company parse(String json) {
-		return new Gson().fromJson(json, Company.class);
+		return getGson().fromJson(json, Company.class);
 	}
 
 	/**
