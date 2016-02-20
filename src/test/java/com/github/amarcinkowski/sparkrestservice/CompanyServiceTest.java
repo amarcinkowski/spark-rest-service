@@ -54,10 +54,7 @@ public class CompanyServiceTest {
 	@BeforeClass
 	public static void beforeClass() {
 		Main.main(null);
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-		}
+		Spark.awaitInitialization();
 	}
 
 	/**
