@@ -6,6 +6,7 @@ import static com.github.amarcinkowski.sparkrestservice.JsonUtil.json;
 import static spark.Spark.after;
 import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
@@ -30,6 +31,8 @@ public class CompanyController {
 	 *            the company service
 	 */
 	public CompanyController(final CompanyService companyService) {
+		
+		port(getHerokuAssignedPort());
 
 		staticFileLocation("/public");
 
@@ -51,5 +54,18 @@ public class CompanyController {
 			res.body(new Gson().toJson(e.getMessage()));
 		});
 	}
+	
+    /**
+     * Gets the heroku assigned port.
+     *
+     * @return the heroku assigned port
+     */
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
 
 }
