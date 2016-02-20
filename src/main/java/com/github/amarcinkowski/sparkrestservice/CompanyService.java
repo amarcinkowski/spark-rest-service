@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The Class CompanyService.
  */
 public class CompanyService {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(CompanyService.class);
 
 	/** The companies. */
 	private Map<Long, Company> companies = new HashMap<>();
@@ -19,6 +24,7 @@ public class CompanyService {
 	 * @return the all companies
 	 */
 	public List<Company> getAllCompanies() {
+		LOGGER.trace("getAllCompanies:" + companies.size());
 		return new ArrayList<>(companies.values());
 	}
 

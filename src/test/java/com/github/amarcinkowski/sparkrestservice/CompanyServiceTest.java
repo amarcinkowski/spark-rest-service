@@ -7,12 +7,15 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -24,6 +27,10 @@ import spark.utils.IOUtils;
  */
 public class CompanyServiceTest {
 
+	/** The Constant LOGGER. */
+	private final static Logger LOGGER = LoggerFactory.getLogger(CompanyServiceTest.class);
+	
+	/** The Constant PORT. */
 	private final static String PORT = "4567";
 
 	/** The Constant URL. */
@@ -35,6 +42,7 @@ public class CompanyServiceTest {
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
 			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
 
+	/** The Constant JSON_NO_NAME. */
 	public final static String JSON_NO_NAME = "{"
 			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
@@ -62,35 +70,45 @@ public class CompanyServiceTest {
 
 	/**
 	 * Test add.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testAdd() throws IOException {
-		TestResponse res = request("POST", JSON);
-		Map<String, String> json = res.json();
+		LOGGER.debug("testAdd");
+		TestResponse res = request("POST", JSON, URL);
+		Map<String, Object> json = res.json();
 		assertEquals(200, res.status);
 		assertEquals("Andrzej Marcinkowski IT Services", json.get("name"));
 		assertEquals("Armii Krajowej 41", json.get("address"));
 		assertNotNull(json.get("companyID"));
 	}
 
+	/**
+	 * Test validators.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testValidators() throws IOException {
-		TestResponse res = request("POST", JSON_NO_NAME);
+		LOGGER.debug("testValidators");
+		TestResponse res = request("POST", JSON_NO_NAME, URL);
 		assertEquals(400, res.status);
 		assertTrue(res.body.contains("response code: 400"));
 	}
+	
 
 	/**
 	 * Request.
 	 *
-	 * @param method
-	 *            the method
-	 * @param json
-	 *            the json
+	 * @param method            the method
+	 * @param json            the json
+	 * @param urlString the url string
 	 * @return the test response
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	private TestResponse request(String method, String json) throws IOException {
-		URL url = new URL(URL);
+	private TestResponse request(String method, String json, String urlString) throws IOException {
+		URL url = new URL(urlString);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod(method);
 		connection.setDoOutput(true);
@@ -134,8 +152,17 @@ public class CompanyServiceTest {
 		 *
 		 * @return the map
 		 */
-		public Map<String, String> json() {
+		@SuppressWarnings("unchecked")
+		public Map<String, Object> json() {
 			return new Gson().fromJson(body, HashMap.class);
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return status + body;
 		}
 	}
 
