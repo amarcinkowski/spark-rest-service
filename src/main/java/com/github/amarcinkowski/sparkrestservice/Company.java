@@ -227,16 +227,4 @@ public class Company {
 		return this;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(companyID);
-		buffer.append("|");
-		buffer.append(name);
-		return super.toString();
-	}
-
 }

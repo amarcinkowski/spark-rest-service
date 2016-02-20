@@ -68,7 +68,6 @@ public class CompanyService {
 	 *             the cannot update exception (it may not exist)
 	 */
 	public Company updateCompany(Company company) throws CannotUpdateException {
-
 		if (!companies.containsKey(company.getCompanyID())) {
 			throw new CannotUpdateException("There's no Company with this ID");
 		}
