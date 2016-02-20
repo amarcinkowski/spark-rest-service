@@ -6,7 +6,6 @@ import static com.github.amarcinkowski.sparkrestservice.JsonUtil.json;
 import static spark.Spark.after;
 import static spark.Spark.exception;
 import static spark.Spark.get;
-import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
@@ -32,11 +31,7 @@ public class CompanyController {
 	 */
 	public CompanyController(final CompanyService companyService) {
 
-		String port = System.getenv("PORT");
-		
-		port(port == null ? 4567 : Integer.parseInt(port));
 		staticFileLocation("/public");
-
 
 		get("/companies", (req, res) -> companyService.getAllCompanies(), json());
 
