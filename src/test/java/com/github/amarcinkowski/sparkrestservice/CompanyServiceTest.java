@@ -82,9 +82,14 @@ public class CompanyServiceTest {
 		assertNotNull(json.get("companyID"));
 	}
 
+	/**
+	 * Test get all.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testGetAll() throws IOException {
-		LOGGER.trace("testGet");
+		LOGGER.trace("testGetAll");
 		request("POST", JSON, URL);
 		TestResponse res = request("GET", null, URL);
 		assertEquals(200, res.status);
@@ -93,6 +98,11 @@ public class CompanyServiceTest {
 		assertEquals("Andrzej Marcinkowski IT Services", json[0].get("name"));
 	}
 
+	/**
+	 * Test get by id.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@Test
 	public void testGetByID() throws IOException {
 		LOGGER.trace("testGet");
@@ -102,6 +112,34 @@ public class CompanyServiceTest {
 		assertEquals(200, res.status);
 		assertTrue(res.body.contains("Andrzej Marcinkowski"));
 		assertEquals("Andrzej Marcinkowski IT Services", res.json().get("name"));
+	}
+	
+	/**
+	 * Test update.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testUpdate() throws IOException {
+		LOGGER.trace("testUpdate");
+		TestResponse res1 = request("POST", JSON, URL);
+		Company c = new Gson().fromJson(res1.body, Company.class);
+		c.setCountry("Denmark");
+		String json = new Gson().toJson(c);
+		TestResponse res = request("PUT", json, URL);
+		assertEquals(200, res.status);
+		assertEquals("Denmark", res.json().get("country"));
+	}
+	
+	/**
+	 * Test add owner.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testAddOwner() throws IOException {
+		LOGGER.trace("testAddOwner");
+		// TODO not yet implemented
 	}
 
 	/**
@@ -183,6 +221,11 @@ public class CompanyServiceTest {
 			return new Gson().fromJson(body, HashMap.class);
 		}
 		
+		/**
+		 * Json array.
+		 *
+		 * @return the map[]
+		 */
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		public Map[] jsonArray() {
 			return new Gson().fromJson(body, HashMap[].class);
