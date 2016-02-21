@@ -52,7 +52,17 @@ public class CompanyController {
 		});
 
 		exception(Exception.class, (e, req, res) -> {
-			res.status(400);
+			switch (e.getClass().getSimpleName()) {
+			case "ConstraintViolationException":
+				res.status(400);
+				break;
+			case "CannotUpdateException":
+			case "NoSuchIdException":
+				res.status(404);
+				break;
+			default:
+				res.status(400);
+			}
 			LOGGER.warn(e.getMessage());
 			res.body(new Gson().toJson(e.getMessage()));
 		});

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,12 +53,23 @@ public class CompanyServiceTest {
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
 			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
 
+	public final static String JSON_SAME_ID = "{\"companyID\": 1, \"name\": \"Andrzej Marcinkowski IT Services\","
+			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
+			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
+			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
+
 	/** The Constant JSON_NO_NAME. */
 	public final static String JSON_NO_NAME = "{"
 			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
 			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
 	
+	/** The Constant JSON_NONEXISTING. */
+	public final static String JSON_NONEXISTING = "{\"companyID\": 99, \"name\": \"Andrzej Marcinkowski IT Services\","
+			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
+			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
+			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
+
 	/** The Constant JSON_NO_NAME. */
 	public final static String JSON_OWNERS = "[\"De vilde Svaner\", \"Den lille Havfrue\"]";
 
@@ -95,11 +107,24 @@ public class CompanyServiceTest {
 	}
 
 	/**
+	 * Test add already existing id.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testAddAlreadyExistingID() throws IOException {
+		request("POST", JSON_SAME_ID, URL);
+		TestResponse res2 = request("POST", JSON_SAME_ID, URL);
+		assertEquals(400, res2.status);
+	}
+
+	/**
 	 * Test get all.
 	 *
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
+	@SuppressWarnings("rawtypes")
 	@Test
 	public void testGetAll() throws IOException {
 		request("POST", JSON, URL);
@@ -125,6 +150,12 @@ public class CompanyServiceTest {
 		assertTrue(res.body.contains("Andrzej Marcinkowski"));
 		assertEquals("Andrzej Marcinkowski IT Services", res.json().get("name"));
 	}
+	
+	@Test
+	public void testGetNonexistent() throws IOException {
+		TestResponse res = request("GET", null, URL + "/99");
+		assertEquals(404, res.status);
+	}
 
 	/**
 	 * Test update.
@@ -142,6 +173,17 @@ public class CompanyServiceTest {
 		assertEquals(200, res.status);
 		assertEquals("Denmark", res.json().get("country"));
 	}
+	
+	/**
+	 * Test update nonexisting.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	@Test
+	public void testUpdateNonexisting() throws IOException {
+		TestResponse res = request("PUT", JSON_NONEXISTING, URL);
+		assertEquals(404, res.status);
+	}
 
 	/**
 	 * Test add owner.
@@ -150,16 +192,24 @@ public class CompanyServiceTest {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testAddOwner() throws IOException {
 		TestResponse res1 = request("POST", JSON, URL);
 		Object companyId = res1.json().get("companyID");
-		System.out.println(companyId);
 		TestResponse res2 = request("PUT", JSON_OWNERS, URL + "/owners/" + companyId);
-		System.out.println(res2.status);
-		System.out.println(res2.body);
+		assertEquals("2", res2.body);
 		TestResponse res3 = request("GET", null, URL + "/" + companyId);
-		System.out.println(res3.body);
+		Map<String, Object> json = res3.json();
+		ArrayList<String> owners = (ArrayList<String>) json.get("beneficialOwner");
+		assertEquals(5, owners.size());
 	}
+	
+	@Test
+	public void testAddOwnerToNonexistent() throws IOException {
+		TestResponse res2 = request("PUT", JSON_OWNERS, URL + "/owners/99");
+		assertEquals(404, res2.status);
+	}
+
 	/**
 	 * Test validators.
 	 *
@@ -205,6 +255,18 @@ public class CompanyServiceTest {
 		return new TestResponse(connection.getResponseCode(), body);
 	}
 
+	/**
+	 * Log req res.
+	 *
+	 * @param conn
+	 *            the conn
+	 * @param body
+	 *            the body
+	 * @param json
+	 *            the json
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	private void logReqRes(HttpURLConnection conn, String body, String json) throws IOException {
 		LOGGER.info(String.format("> %7s: %s", conn.getRequestMethod(), json));
 		LOGGER.info(String.format("< %2s(%s): %s", conn.getResponseMessage(), conn.getResponseCode(), body));
