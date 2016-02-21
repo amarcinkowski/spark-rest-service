@@ -31,15 +31,15 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 }
 ```
 ##### Response
-```bash
-< HTTP/1.1 **201 Created**
+<pre>
+< HTTP/1.1 <b>201 Created</b>
 < Date: Sun, 21 Feb 2016 21:33:00 GMT
-< **Location: localhost:4567/companies/-7643613933603680963**
+< <n>Location: localhost:4567/companies/-7643613933603680963</b>
 < Content-Type: application/json
 < Transfer-Encoding: chunked
 < Server: Jetty(9.3.2.v20150730)
 < 
-```
+</pre>
 
 ## Development
 ### Tools
