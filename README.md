@@ -13,12 +13,22 @@ Rest Web Service with Spark Framework
 |DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
 
 ### Examples
-#### cURL
-##### Request
+#### POST Request
 ```bash
 curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["Andrzej Marcinkowski", "Emil i Lönneberga", "Mary Poppins"]}'
 ```
 
+#### JSON
+```json
+{
+  "name": "IT Services",
+  "address" : "Armii Krajowej 41",
+  "city": "Kalisz",
+  "country" : "Poland",
+  "phone" : "+48 745634543",
+  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
+}
+```
 ##### Response
 ```bash
 *   Trying 127.0.0.1...
@@ -39,18 +49,6 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 < 
 * Connection #0 to host localhost left intact
 {"companyID":"-5163499408764871927","name":"IT Services","address":"Armii Krajowej 41","city":"Kalisz","country":"Poland","beneficialOwner":["Andrzej Marcinkowski","Emil i Lönneberga","Mary Poppins"]}
-```
-#### JSON
-```json
-{
-  
-  "name": "IT Services",
-  "address" : "Armii Krajowej 41",
-  "city": "Kalisz",
-  "country" : "Poland",
-  "phone" : "+48 745634543",
-  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
-}
 ```
 
 ## Development
