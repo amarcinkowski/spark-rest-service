@@ -13,12 +13,13 @@ Rest Web Service with Spark Framework
 |DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
 
 ### Examples
-#### POST Request
-```bash
-curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["Andrzej Marcinkowski", "Emil i Lönneberga", "Mary Poppins"]}'
-```
+#### 1. POST new Company correctly - 201 (CREATED)
 
-#### JSON
+##### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
+```
+##### JSON
 ```json
 {
   "name": "IT Services",
@@ -31,24 +32,13 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 ```
 ##### Response
 ```bash
-*   Trying 127.0.0.1...
-* Connected to localhost (127.0.0.1) port 4567 (#0)
-> POST /companies HTTP/1.1
-> Host: localhost:4567
-> User-Agent: curl/7.43.0
-> Accept: */*
-> Content-Type: application/json
-> Content-Length: 210
-> 
-* upload completely sent off: 210 out of 210 bytes
-< HTTP/1.1 200 OK
-< Date: Sun, 21 Feb 2016 01:19:22 GMT
+< HTTP/1.1 **201 Created**
+< Date: Sun, 21 Feb 2016 21:33:00 GMT
+< **Location: localhost:4567/companies/-7643613933603680963**
 < Content-Type: application/json
 < Transfer-Encoding: chunked
 < Server: Jetty(9.3.2.v20150730)
 < 
-* Connection #0 to host localhost left intact
-{"companyID":"-5163499408764871927","name":"IT Services","address":"Armii Krajowej 41","city":"Kalisz","country":"Poland","beneficialOwner":["Andrzej Marcinkowski","Emil i Lönneberga","Mary Poppins"]}
 ```
 
 ## Development
