@@ -11,14 +11,14 @@ import spark.ResponseTransformer;
  */
 public class JsonUtil {
 
+	/** The gson. */
 	private static Gson gson;
 
 	/**
-	 * Private constructor.
+	 * Gets the gson.
+	 *
+	 * @return the gson
 	 */
-	private JsonUtil() {
-	}
-
 	private static Gson getGson() {
 		if (gson == null) {
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -58,4 +58,5 @@ public class JsonUtil {
 	public static ResponseTransformer json() {
 		return JsonUtil::toJson;
 	}
+	
 }

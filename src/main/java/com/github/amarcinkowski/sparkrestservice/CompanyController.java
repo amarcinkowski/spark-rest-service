@@ -44,6 +44,8 @@ public class CompanyController {
 
 		put("/companies", (req, res) -> companyService.updateCompany(parseAndValidate(req)), json());
 
+		put("/companies", (req, res) -> companyService.updateCompany(parseAndValidate(req)), json());
+
 		after((req, res) -> {
 			res.type("application/json");
 		});
