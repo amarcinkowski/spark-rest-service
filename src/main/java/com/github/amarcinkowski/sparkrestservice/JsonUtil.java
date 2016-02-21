@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.LongSerializationPolicy;
 
+import spark.Request;
 import spark.ResponseTransformer;
 
 /**
@@ -57,6 +58,10 @@ public class JsonUtil {
 	 */
 	public static ResponseTransformer json() {
 		return JsonUtil::toJson;
+	}
+
+	public static String[] parseOwners(String json) {
+		return getGson().fromJson(json, String[].class);
 	}
 	
 }

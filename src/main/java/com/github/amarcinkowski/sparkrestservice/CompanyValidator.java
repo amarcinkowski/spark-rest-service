@@ -52,7 +52,7 @@ public class CompanyValidator {
 	 *            the req
 	 * @return the company
 	 */
-	public static Company parseAndValidate(Request req) throws ConstraintViolationException {
+	public static Company parseRequest(Request req) throws ConstraintViolationException {
 		Company company = parse(req);
 		Set<ConstraintViolation<Company>> constraintViolations = validate(company);
 		if (constraintViolations.size() > 0) {
@@ -73,6 +73,16 @@ public class CompanyValidator {
 		return Long.parseLong(req.params(":id"));
 	}
 
+    /**
+     * Gets the owners.
+     *
+     * @param req the req
+     * @return the owners
+     */
+    public static String[] getOwners(Request req) {
+    	return JsonUtil.parseOwners(req.body());
+	}
+	
 	/**
 	 * Gets the error message.
 	 *

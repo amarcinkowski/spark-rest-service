@@ -7,13 +7,16 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +32,13 @@ public class CompanyServiceTest {
 
 	/** The Constant LOGGER. */
 	private final static Logger LOGGER = LoggerFactory.getLogger(CompanyServiceTest.class);
+
+	@Rule
+	public TestRule watcher = new TestWatcher() {
+		protected void starting(Description description) {
+			LOGGER.info("===  Test: " + description.getMethodName());
+		}
+	};
 
 	/** The Constant PORT. */
 	private final static String PORT = "4567";
@@ -47,6 +57,9 @@ public class CompanyServiceTest {
 			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
 			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
+	
+	/** The Constant JSON_NO_NAME. */
+	public final static String JSON_OWNERS = "[\"De vilde Svaner\", \"Den lille Havfrue\"]";
 
 	/**
 	 * Before class.
@@ -73,7 +86,6 @@ public class CompanyServiceTest {
 	 */
 	@Test
 	public void testAdd() throws IOException {
-		LOGGER.trace("testAdd");
 		TestResponse res = request("POST", JSON, URL);
 		Map<String, Object> json = res.json();
 		assertEquals(200, res.status);
@@ -85,11 +97,11 @@ public class CompanyServiceTest {
 	/**
 	 * Test get all.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testGetAll() throws IOException {
-		LOGGER.trace("testGetAll");
 		request("POST", JSON, URL);
 		TestResponse res = request("GET", null, URL);
 		assertEquals(200, res.status);
@@ -101,11 +113,11 @@ public class CompanyServiceTest {
 	/**
 	 * Test get by id.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testGetByID() throws IOException {
-		LOGGER.trace("testGet");
 		TestResponse res1 = request("POST", JSON, URL);
 		Object companyId = res1.json().get("companyID");
 		TestResponse res = request("GET", null, URL + "/" + companyId);
@@ -113,15 +125,15 @@ public class CompanyServiceTest {
 		assertTrue(res.body.contains("Andrzej Marcinkowski"));
 		assertEquals("Andrzej Marcinkowski IT Services", res.json().get("name"));
 	}
-	
+
 	/**
 	 * Test update.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testUpdate() throws IOException {
-		LOGGER.trace("testUpdate");
 		TestResponse res1 = request("POST", JSON, URL);
 		Company c = new Gson().fromJson(res1.body, Company.class);
 		c.setCountry("Denmark");
@@ -130,18 +142,24 @@ public class CompanyServiceTest {
 		assertEquals(200, res.status);
 		assertEquals("Denmark", res.json().get("country"));
 	}
-	
+
 	/**
 	 * Test add owner.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testAddOwner() throws IOException {
-		LOGGER.trace("testAddOwner");
-		// TODO not yet implemented
+		TestResponse res1 = request("POST", JSON, URL);
+		Object companyId = res1.json().get("companyID");
+		System.out.println(companyId);
+		TestResponse res2 = request("PUT", JSON_OWNERS, URL + "/owners/" + companyId);
+		System.out.println(res2.status);
+		System.out.println(res2.body);
+		TestResponse res3 = request("GET", null, URL + "/" + companyId);
+		System.out.println(res3.body);
 	}
-
 	/**
 	 * Test validators.
 	 *
@@ -150,7 +168,6 @@ public class CompanyServiceTest {
 	 */
 	@Test
 	public void testValidators() throws IOException {
-		LOGGER.trace("testValidators");
 		TestResponse res = request("POST", JSON_NO_NAME, URL);
 		assertEquals(400, res.status);
 		assertTrue(res.body.contains("response code: 400"));
@@ -181,10 +198,16 @@ public class CompanyServiceTest {
 		String body;
 		try {
 			body = IOUtils.toString(connection.getInputStream());
+			logReqRes(connection, body, json);
 		} catch (Exception e) {
 			body = e.getMessage();
 		}
 		return new TestResponse(connection.getResponseCode(), body);
+	}
+
+	private void logReqRes(HttpURLConnection conn, String body, String json) throws IOException {
+		LOGGER.info(String.format("> %7s: %s", conn.getRequestMethod(), json));
+		LOGGER.info(String.format("< %2s(%s): %s", conn.getResponseMessage(), conn.getResponseCode(), body));
 	}
 
 	/**
@@ -220,13 +243,13 @@ public class CompanyServiceTest {
 		public Map<String, Object> json() {
 			return new Gson().fromJson(body, HashMap.class);
 		}
-		
+
 		/**
 		 * Json array.
 		 *
 		 * @return the map[]
 		 */
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({ "rawtypes" })
 		public Map[] jsonArray() {
 			return new Gson().fromJson(body, HashMap[].class);
 		}

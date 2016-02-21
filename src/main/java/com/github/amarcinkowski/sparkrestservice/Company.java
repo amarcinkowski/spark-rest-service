@@ -15,42 +15,40 @@ import org.hibernate.validator.constraints.NotEmpty;
  * The Class Company.
  */
 public class Company {
-	
+
 	/** The Constant EMAIL_PATTERN. */
-	private static final String EMAIL_PATTERN = 
-			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	/** The Constant PHONE_NUMBER_PATTERN. */
-	private static final String PHONE_NUMBER_PATTERN =
-			"[0-9 \\(\\)\\+]{9,14}";
+	private static final String PHONE_NUMBER_PATTERN = "[0-9 \\(\\)\\+]{9,14}";
 
 	/** The company id. */
 	@NotNull
 	private Long companyID;
 
 	/** The name. */
-	@NotBlank(message="Name is mandatory")
+	@NotBlank(message = "Name is mandatory")
 	private String name;
 
 	/** The address. */
-	@NotBlank(message="Address is mandatory")
+	@NotBlank(message = "Address is mandatory")
 	private String address;
 
 	/** The city. */
-	@NotBlank(message="City is mandatory")
+	@NotBlank(message = "City is mandatory")
 	private String city;
 
 	/** The country. */
-	@NotBlank(message="Country is mandatory")
+	@NotBlank(message = "Country is mandatory")
 	private String country;
 
 	/** The e­mail (not required). */
-	@Email(regexp=EMAIL_PATTERN,message="Wrong email format")
+	@Email(regexp = EMAIL_PATTERN, message = "Wrong email format")
 	private String e­mail;
 
 	/** The phone number (not required). */
-	@Pattern(regexp=PHONE_NUMBER_PATTERN,message="Wrong phone format")
+	@Pattern(regexp = PHONE_NUMBER_PATTERN, message = "Wrong phone format")
 	private String phoneNumber;
 
 	/** The beneficial owners. */
@@ -219,11 +217,14 @@ public class Company {
 	/**
 	 * Adds the beneficial owner.
 	 *
-	 * @param beneficialOwner the beneficial owner
+	 * @param beneficialOwner
+	 *            the beneficial owner
 	 * @return the company
 	 */
-	public Company addBeneficialOwner(String beneficialOwner) {
-		this.beneficialOwner.add(beneficialOwner);
+	public Company addBeneficialOwners(String... beneficialOwners) {
+		for (String owner : beneficialOwners) {
+			this.beneficialOwner.add(owner);
+		}
 		return this;
 	}
 

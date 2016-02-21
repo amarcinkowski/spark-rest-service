@@ -23,7 +23,7 @@ public class CompanyService {
 	 *
 	 * @return the all companies
 	 */
-	public List<Company> getAllCompanies() {
+	public List<Company> getAll() {
 		LOGGER.trace("getAllCompanies:" + companies.size());
 		return new ArrayList<>(companies.values());
 	}
@@ -36,7 +36,7 @@ public class CompanyService {
 	 * @return the company
 	 * @throws NoSuchIdException 
 	 */
-	public Company getCompany(Long id) throws NoSuchIdException  {
+	public Company get(Long id) throws NoSuchIdException  {
 		if (companies.containsKey(id)) {
 			return companies.get(id);
 		}
@@ -52,7 +52,7 @@ public class CompanyService {
 	 *             the already exists exception if companyId already registered
 	 *             (should use update instead of add new)
 	 */
-	public Company addNewCompany(Company company) throws AlreadyExistsException {
+	public Company addNew(Company company) throws AlreadyExistsException {
 		if (companies.put(company.getCompanyID(), company) != null) {
 			throw new AlreadyExistsException("Company under ID already exist (please update instead of add)");
 		}
@@ -67,7 +67,7 @@ public class CompanyService {
 	 * @throws CannotUpdateException
 	 *             the cannot update exception (it may not exist)
 	 */
-	public Company updateCompany(Company company) throws CannotUpdateException {
+	public Company update(Company company) throws CannotUpdateException {
 		if (!companies.containsKey(company.getCompanyID())) {
 			throw new CannotUpdateException("There's no Company with this ID");
 		}
@@ -80,16 +80,17 @@ public class CompanyService {
 	 *
 	 * @param companyID
 	 *            the company id
-	 * @param name
+	 * @param owners
 	 *            the name
 	 * @return the company
 	 * @throws CannotUpdateException
 	 */
-	public void addBeneficialOwner(Long companyID, String name) throws CannotUpdateException {
+	public Integer addOwners(Long companyID, String... owners) throws CannotUpdateException {
 		Company c = companies.get(companyID);
 		if (c == null) {
 			throw new CannotUpdateException("There's no Company with this ID");
 		}
-		c.addBeneficialOwner(name);
+		c.addBeneficialOwners(owners);
+		return owners.length;
 	}
 }
