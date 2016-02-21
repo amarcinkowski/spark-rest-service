@@ -23,7 +23,7 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 ```json
 {
   "name": "IT Services",
-  "address" : "Armii Krajowej 41",
+  "address" : "Parczewskiego 8",
   "city": "Kalisz",
   "country" : "Poland",
   "phone" : "+48 745634543",
@@ -34,7 +34,7 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 <pre>
 < HTTP/1.1 <b>201 Created</b>
 < Date: Sun, 21 Feb 2016 21:33:00 GMT
-< <n>Location: localhost:4567/companies/-7643613933603680963</b>
+< <b>Location: localhost:4567/companies/-7643613933603680963</b>
 < Content-Type: application/json
 < Transfer-Encoding: chunked
 < Server: Jetty(9.3.2.v20150730)
