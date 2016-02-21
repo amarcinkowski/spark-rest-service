@@ -7,7 +7,7 @@ Rest Web Service with Spark Framework
 ### HTTP methods
 | HTTP Method |	CRUD |	Entire Collection (e.g. /companies) |	Specific Item (e.g. /companies/{id}) |
 |---|---|---|---|---|
-|POST |Create |201 (Created), 'Location' header with link to /customers/{id} containing new ID.	|404 (Not Found), 409 (Conflict) if resource already exists..|
+|POST |Create |201 (Created), 'Location' header with link to /customers/{id} containing new ID. 400 (Bad Request) if constraints are violated (missing required fields).|404 (Not Found), 409 (Conflict) if resource already exists..|
 |GET |Read	|200 (OK), list of customers. |200 (OK), single customer. 404 (Not Found), if ID not found or invalid.|
 |PUT	|Update/Replace	|N/A 404 (Not Found) |200 (OK) or 204 (No Content). 404 (Not Found), if ID not found or invalid.|
 |DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
