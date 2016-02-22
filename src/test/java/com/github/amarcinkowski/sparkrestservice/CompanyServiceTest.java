@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -63,7 +64,7 @@ public class CompanyServiceTest {
 			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
 			+ "\"phone\" : \"+48 745634543\",\"beneficialOwner\" : [\"Andrzej Marcinkowski\", "
 			+ "\"Emil i Lönneberga\", \"Mary Poppins\"]}";
-	
+
 	/** The Constant JSON_NONEXISTING. */
 	public final static String JSON_NONEXISTING = "{\"companyID\": 99, \"name\": \"Andrzej Marcinkowski IT Services\","
 			+ "\"address\" : \"Armii Krajowej 41\",\"city\": \"Kalisz\",\"country\" : \"Poland\","
@@ -99,23 +100,23 @@ public class CompanyServiceTest {
 	@Test
 	public void testAdd() throws IOException {
 		TestResponse res = request("POST", JSON, URL);
-		Map<String, Object> json = res.json();
-		assertEquals(200, res.status);
-		assertEquals("Andrzej Marcinkowski IT Services", json.get("name"));
-		assertEquals("Armii Krajowej 41", json.get("address"));
-		assertNotNull(json.get("companyID"));
+		assertEquals(201, res.status);
+		assertTrue(res.headers.containsKey("Location"));
+		List<String> location = res.headers.get("Location");
+		assertTrue(location.iterator().next().contains("http://"));
 	}
 
 	/**
 	 * Test add already existing id.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testAddAlreadyExistingID() throws IOException {
 		request("POST", JSON_SAME_ID, URL);
 		TestResponse res2 = request("POST", JSON_SAME_ID, URL);
-		assertEquals(400, res2.status);
+		assertEquals(409, res2.status);
 	}
 
 	/**
@@ -144,13 +145,13 @@ public class CompanyServiceTest {
 	@Test
 	public void testGetByID() throws IOException {
 		TestResponse res1 = request("POST", JSON, URL);
-		Object companyId = res1.json().get("companyID");
+		Object companyId = getIdFromHeader(res1);
 		TestResponse res = request("GET", null, URL + "/" + companyId);
 		assertEquals(200, res.status);
 		assertTrue(res.body.contains("Andrzej Marcinkowski"));
 		assertEquals("Andrzej Marcinkowski IT Services", res.json().get("name"));
 	}
-	
+
 	@Test
 	public void testGetNonexistent() throws IOException {
 		TestResponse res = request("GET", null, URL + "/99");
@@ -166,18 +167,21 @@ public class CompanyServiceTest {
 	@Test
 	public void testUpdate() throws IOException {
 		TestResponse res1 = request("POST", JSON, URL);
-		Company c = new Gson().fromJson(res1.body, Company.class);
+		String companyId = getIdFromHeader(res1);
+		TestResponse res2 = request("GET", null, URL + "/" + companyId);
+		Company c = new Gson().fromJson(res2.body, Company.class);
 		c.setCountry("Denmark");
 		String json = new Gson().toJson(c);
 		TestResponse res = request("PUT", json, URL);
 		assertEquals(200, res.status);
 		assertEquals("Denmark", res.json().get("country"));
 	}
-	
+
 	/**
 	 * Test update nonexisting.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	@Test
 	public void testUpdateNonexisting() throws IOException {
@@ -195,15 +199,20 @@ public class CompanyServiceTest {
 	@SuppressWarnings("unchecked")
 	public void testAddOwner() throws IOException {
 		TestResponse res1 = request("POST", JSON, URL);
-		Object companyId = res1.json().get("companyID");
-		TestResponse res2 = request("PUT", JSON_OWNERS, URL + "/owners/" + companyId);
-		assertEquals("2", res2.body);
-		TestResponse res3 = request("GET", null, URL + "/" + companyId);
-		Map<String, Object> json = res3.json();
+		String companyId = getIdFromHeader(res1);
+		request("PUT", JSON_OWNERS, URL + "/owners/" + companyId);
+		TestResponse res2 = request("GET", null, URL + "/" + companyId);
+		Map<String, Object> json = res2.json();
 		ArrayList<String> owners = (ArrayList<String>) json.get("beneficialOwner");
 		assertEquals(5, owners.size());
 	}
-	
+
+	String getIdFromHeader(TestResponse res) {
+		List<String> location = res.headers.get("Location");
+		String companyId = location.get(0).replace(URL + "/", "");
+		return companyId;
+	}
+
 	@Test
 	public void testAddOwnerToNonexistent() throws IOException {
 		TestResponse res2 = request("PUT", JSON_OWNERS, URL + "/owners/99");
@@ -251,8 +260,9 @@ public class CompanyServiceTest {
 			logReqRes(connection, body, json);
 		} catch (Exception e) {
 			body = e.getMessage();
+			logReqRes(connection, body, json);
 		}
-		return new TestResponse(connection.getResponseCode(), body);
+		return new TestResponse(connection.getResponseCode(), body, connection.getHeaderFields());
 	}
 
 	/**
@@ -268,8 +278,8 @@ public class CompanyServiceTest {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	private void logReqRes(HttpURLConnection conn, String body, String json) throws IOException {
-		LOGGER.info(String.format("> %7s: %s", conn.getRequestMethod(), json));
-		LOGGER.info(String.format("< %2s(%s): %s", conn.getResponseMessage(), conn.getResponseCode(), body));
+		LOGGER.info(String.format("> %16s: %s", conn.getRequestMethod(), json));
+		LOGGER.info(String.format("< %11s(%s): %s", conn.getResponseMessage(), conn.getResponseCode(), body));
 	}
 
 	/**
@@ -283,6 +293,8 @@ public class CompanyServiceTest {
 		/** The status. */
 		public final int status;
 
+		private Map<String, List<String>> headers;
+
 		/**
 		 * Instantiates a new test response.
 		 *
@@ -290,8 +302,10 @@ public class CompanyServiceTest {
 		 *            the status
 		 * @param body
 		 *            the body
+		 * @param map
 		 */
-		public TestResponse(int status, String body) {
+		public TestResponse(int status, String body, Map<String, List<String>> headers) {
+			this.headers = headers;
 			this.status = status;
 			this.body = body;
 		}

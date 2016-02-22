@@ -17,7 +17,7 @@ public class CompanyBuilderTest {
 		assertEquals(c.getAddress(), "W");
 		assertEquals(c.getCity(), "E");
 		assertEquals(c.getCountry(), "R");
-		assertEquals(c.getE­mail(), "S");
+		assertEquals(c.getMail(), "S");
 		assertEquals(c.getPhoneNumber(), "T");
 		assertEquals(c.getBeneficialOwner(), new HashSet<>(Arrays.asList(new String[] { "U", "W" })));
 	}
