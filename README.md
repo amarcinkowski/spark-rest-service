@@ -17,7 +17,7 @@ Rest Web Service with Spark Framework
 ##### POST new Company - 201 (CREATED)
 ###### cURL Request
 ```bash
-curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
+curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phoneNumber" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
 ```
 ###### JSON
 ```json
@@ -26,21 +26,51 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
   "address" : "Parczewskiego 8",
   "city": "Kalisz",
   "country" : "Poland",
-  "phone" : "+48 745634543",
+  "phoneNumber" : "+48 745634543",
   "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
 }
 ```
 ###### Response
 <pre>
 < HTTP/1.1 <b>201 Created</b>
-< Date: Sun, 21 Feb 2016 21:33:00 GMT
 < <b>Location: localhost:4567/companies/-7643613933603680963</b>
-< Content-Type: application/json
-< Transfer-Encoding: chunked
-< Server: Jetty(9.3.2.v20150730)
-< 
 </pre>
 
+##### GET all Companies - 200 (OK)
+###### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X GET localhost:4567/companies
+```
+###### Response
+<pre>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+[{"companyID":"-7300474150165584659","name":"ACME","address":"5th","city":"NYC","country":"USA","beneficialOwner":["BO"]}]
+</pre>
+
+##### GET Company by ID - 200 (OK)
+###### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X GET localhost:4567/companies/-7300474150165584659
+```
+###### Response
+<pre>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+{"companyID":"-7300474150165584659","name":"ACME","address":"5th","city":"NYC","country":"USA","beneficialOwner":["BO"]}
+</pre>
+
+##### PUT update Company - 200 (OK)
+###### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X PUT localhost:4567/companies -d '{"companyID": -7300474150165584659, "name" : "United Comics",  "address" : "Main Ave",  "city": "London",  "country" : "UK",  "phoneNumber" : "+44 745634543", "mail" : "hello@heaven.co.uk", "beneficialOwner" : ["Mary Poppins", "Den lille Havfrue"]}'
+```
+###### Response
+<pre>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+{"companyID":"-7300474150165584659","name":"United Comics","address":"Main Ave","city":"London","country":"UK","mail":"hello@heaven.co.uk","phoneNumber":"+44 745634543","beneficialOwner":["Mary Poppins","Den lille Havfrue"]}
+</pre>
 #### 2. Incorrect requests
 ##### POST new Company missing required field - 400 (BAD REQUEST)
 ###### cURL Request
@@ -65,6 +95,9 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 < Server: Jetty(9.3.2.v20150730)
 < 
 </pre>
+##### POST new Company duplicate ID - 409 (CONFLICT)
+##### GET Company with nonexistent ID - 404 (NOT FOUND)
+##### PUT update Company with nonexistent ID - 404 (NOT FOUND)
 
 ## Development
 ### Tools
