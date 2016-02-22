@@ -13,13 +13,14 @@ Rest Web Service with Spark Framework
 |DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
 
 ### Examples
-#### 1. POST new Company correctly - 201 (CREATED)
+#### 1. Correct requests
+##### 1. POST new Company - 201 (CREATED)
 
-##### cURL Request
+###### cURL Request
 ```bash
 curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
 ```
-##### JSON
+###### JSON
 ```json
 {
   "name": "IT Services",
@@ -30,12 +31,38 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
   "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
 }
 ```
-##### Response
+###### Response
 <pre>
 < HTTP/1.1 <b>201 Created</b>
 < Date: Sun, 21 Feb 2016 21:33:00 GMT
 < <b>Location: localhost:4567/companies/-7643613933603680963</b>
 < Content-Type: application/json
+< Transfer-Encoding: chunked
+< Server: Jetty(9.3.2.v20150730)
+< 
+</pre>
+
+#### 1. Incorrect requests
+##### 1. POST new Company missing required field - 400 (BAD REQUEST)
+
+###### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
+```
+###### JSON
+```json
+{
+  "city": "Kalisz",
+  "country" : "Poland",
+  "phone" : "+48 745634543",
+  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
+}
+```
+###### Response
+<pre>
+< HTTP/1.1 <b>400 Bad Request</b>
+< Date: Mon, 22 Feb 2016 22:32:48 GMT
+< Content-Type: text/html;charset=utf-8
 < Transfer-Encoding: chunked
 < Server: Jetty(9.3.2.v20150730)
 < 
