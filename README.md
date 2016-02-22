@@ -1,6 +1,6 @@
-# spark-rest-service [![Build Status](https://travis-ci.org/amarcinkowski/spark-rest-service.svg?branch=master)](https://travis-ci.org/amarcinkowski/spark-rest-service) [![codecov.io](https://codecov.io/github/amarcinkowski/spark-rest-service/coverage.svg?branch=master)](https://codecov.io/github/amarcinkowski/spark-rest-service?branch=master)
+# Company REST [![Build Status](https://travis-ci.org/amarcinkowski/spark-rest-service.svg?branch=master)](https://travis-ci.org/amarcinkowski/spark-rest-service) [![codecov.io](https://codecov.io/github/amarcinkowski/spark-rest-service/coverage.svg?branch=master)](https://codecov.io/github/amarcinkowski/spark-rest-service?branch=master)
 
-Rest Web Service with Spark Framework
+This is "Company" REST Web Service with Spark Framework and Angularjs front-end. Below you will find specs
 
 ## REST / JSON Queries
 
@@ -98,6 +98,8 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 ##### POST new Company duplicate ID - 409 (CONFLICT)
 ##### GET Company with nonexistent ID - 404 (NOT FOUND)
 ##### PUT update Company with nonexistent ID - 404 (NOT FOUND)
+#### 3. Ommited requests
+DELETE was not specified in requirements.
 
 ## Development
 ### Tools
