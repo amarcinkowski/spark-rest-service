@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+install nodejs / npm from page (not apt-get)
+npm install -g yo grunt-cli bower
+npm i -g yo generator-karma
+-->
+<html ng-app="companyapp">
+<head>
+<title>Companies</title>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link href="css/xeditable.css" rel="stylesheet">
+</head>
+<body>
+	<div class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/#/">Companies</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" ng-view=""></div>
+
+	<script src="/js/jquery.js"></script>
+	<script src="/js/angular.js"></script>
+	<script src="/js/angular-route.js"></script>
+	<script src="/js/angular-cookies.js"></script>
+	<script src="/js/angular-messages.js"></script>
+	<script src="/js/angular-sanitize.js"></script>
+	<script src="/js/angular-resource.js"></script>
+	<script src="js/xeditable.js"></script>
+	<script src="/scripts/app.js"></script>
+</body>
+</html>
