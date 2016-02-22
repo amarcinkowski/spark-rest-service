@@ -1,15 +1,20 @@
 package com.github.amarcinkowski.sparkrestservice;
 
+import static com.github.amarcinkowski.sparkrestservice.CompanyValidator.parseRequest;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import spark.Request;
+import spark.Response;
+
 /**
  * The Class CompanyService.
  */
 public class CompanyService {
-	
+
 	/** The companies. */
 	private Map<Long, Company> companies = new HashMap<>();
 
@@ -28,29 +33,13 @@ public class CompanyService {
 	 * @param id
 	 *            the id
 	 * @return the company
-	 * @throws NoSuchIdException 
+	 * @throws NoSuchIdException
 	 */
-	public Company get(Long id) throws NoSuchIdException  {
+	public Company get(Long id) throws NoSuchIdException {
 		if (companies.containsKey(id)) {
 			return companies.get(id);
 		}
 		throw new NoSuchIdException("There is no company with this id");
-	}
-
-	/**
-	 * Adds the company.
-	 *
-	 * @param company
-	 *            the company
-	 * @throws AlreadyExistsException
-	 *             the already exists exception if companyId already registered
-	 *             (should use update instead of add new)
-	 */
-	public Company addNew(Company company) throws AlreadyExistsException {
-		if (companies.put(company.getCompanyID(), company) != null) {
-			throw new AlreadyExistsException("Company under ID already exist (please update instead of add)");
-		}
-		return company;
 	}
 
 	/**
@@ -86,5 +75,24 @@ public class CompanyService {
 		}
 		c.addBeneficialOwners(owners);
 		return owners.length;
+	}
+
+	/**
+	 * Adds the new.
+	 *
+	 * @param req the req
+	 * @param res the res
+	 * @return the object
+	 * @throws AlreadyExistsException the already exists exception
+	 */
+	public Object addNew(Request req, Response res) throws AlreadyExistsException {
+		Company company = parseRequest(req);
+		String locationHeader = String.format("http://%s/companies/%s", req.host(), company.getCompanyID());
+		res.header("Location", locationHeader);
+		res.status(201);
+		if (companies.put(company.getCompanyID(), company) != null) {
+			throw new AlreadyExistsException("Company under ID already exist (please update instead of add)");
+		}
+		return "Company created";
 	}
 }

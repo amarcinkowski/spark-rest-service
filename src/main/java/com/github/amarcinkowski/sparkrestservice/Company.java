@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -17,11 +16,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Company {
 
 	/** The Constant EMAIL_PATTERN. */
-	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final String EMAIL_PATTERN = "[A-Za-z0-9+_.-]+@.+";
 
 	/** The Constant PHONE_NUMBER_PATTERN. */
-	private static final String PHONE_NUMBER_PATTERN = "[0-9 \\(\\)\\+]{9,14}";
+	private static final String PHONE_NUMBER_PATTERN = "[0-9 \\(\\)\\+\\-]{9,18}";
 
 	/** The company id. */
 	@NotNull
@@ -44,8 +42,8 @@ public class Company {
 	private String country;
 
 	/** The e­mail (not required). */
-	@Email(regexp = EMAIL_PATTERN, message = "Wrong email format")
-	private String e­mail;
+	@Pattern(regexp = EMAIL_PATTERN, message = "Wrong email format")
+	private String mail;
 
 	/** The phone number (not required). */
 	@Pattern(regexp = PHONE_NUMBER_PATTERN, message = "Wrong phone format")
@@ -157,25 +155,14 @@ public class Company {
 		this.country = country;
 	}
 
-	/**
-	 * Gets the e­mail.
-	 *
-	 * @return the e­mail
-	 */
-	public String getE­mail() {
-		return e­mail;
+	public String getMail() {
+		return mail;
 	}
-
-	/**
-	 * Sets the e­mail.
-	 *
-	 * @param e­mail
-	 *            the new e­mail
-	 */
-	public void setE­mail(String e­mail) {
-		this.e­mail = e­mail;
+	
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
-
+	
 	/**
 	 * Gets the phone number.
 	 *

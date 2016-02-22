@@ -12,10 +12,15 @@ import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
+import javax.validation.ConstraintViolationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+
+import spark.Request;
+import spark.Response;
 
 /**
  * The Class CompanyController.
@@ -41,7 +46,7 @@ public class CompanyController {
 
 		get("/companies/:id", (req, res) -> service.get(getId(req)), json());
 
-		post("/companies", (req, res) -> service.addNew(parseRequest(req)), json());
+		post("/companies", (req, res) -> service.addNew(req, res), json());
 
 		put("/companies", (req, res) -> service.update(parseRequest(req)), json());
 
@@ -60,10 +65,13 @@ public class CompanyController {
 			case "NoSuchIdException":
 				res.status(404);
 				break;
+			case "AlreadyExistsException":
+				res.status(409);
+				break;
 			default:
 				res.status(400);
 			}
-			LOGGER.warn(e.getMessage());
+			LOGGER.trace(e.getMessage());
 			res.body(new Gson().toJson(e.getMessage()));
 		});
 	}

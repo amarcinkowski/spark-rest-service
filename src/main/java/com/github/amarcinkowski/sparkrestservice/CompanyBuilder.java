@@ -13,7 +13,7 @@ public class CompanyBuilder {
 	private String address;
 	private String city;
 	private String country;
-	private String email;
+	private String mail;
 	private String phoneNumber;
 	private Set<String> owners = new HashSet<>();
 
@@ -43,8 +43,8 @@ public class CompanyBuilder {
 		return this;
 	}
 
-	public CompanyBuilder additional(String email, String phoneNumber) {
-		this.email = email;
+	public CompanyBuilder additional(String mail, String phoneNumber) {
+		this.mail = mail;
 		this.phoneNumber = phoneNumber;
 		return this;
 	}
@@ -68,7 +68,7 @@ public class CompanyBuilder {
 		c.setAddress(address);
 		c.setCity(city);
 		c.setCountry(country);
-		c.setE­mail(email);
+		c.setMail(mail);
 		c.setPhoneNumber(phoneNumber);
 		c.setBeneficialOwner(owners);
 		return c;
