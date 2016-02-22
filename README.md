@@ -14,8 +14,7 @@ Rest Web Service with Spark Framework
 
 ### Examples
 #### 1. Correct requests
-##### 1. POST new Company - 201 (CREATED)
-
+##### POST new Company - 201 (CREATED)
 ###### cURL Request
 ```bash
 curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
@@ -42,9 +41,8 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 < 
 </pre>
 
-#### 1. Incorrect requests
-##### 1. POST new Company missing required field - 400 (BAD REQUEST)
-
+#### 2. Incorrect requests
+##### POST new Company missing required field - 400 (BAD REQUEST)
 ###### cURL Request
 ```bash
 curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"city": "Kalisz",  "country" : "Poland",  "phone" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
