@@ -36,6 +36,21 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 < <b>Location: localhost:4567/companies/-7643613933603680963</b>
 </pre>
 
+##### PUT new Beneficial Owners for Company - 200 (OK)
+###### cURL Request
+```bash
+curl -v -H "Content-Type: application/json" -X PUT localhost:4567/companies/owners/-6283486299957005396 -d '["Den grimme Ælling", "Den lille Pige med Svovlstikkerne"]'
+```
+###### JSON
+```json
+["Den grimme Ælling", "Den lille Pige med Svovlstikkerne"]
+```
+###### Response
+<pre>
+< HTTP/1.1 <b>200 OK</b>
+< Content-Type: application/json
+</pre>
+
 ##### GET all Companies - 200 (OK)
 ###### cURL Request
 ```bash
