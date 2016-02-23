@@ -6,6 +6,9 @@ jdk:
   - oraclejdk8
 before_install:
   - pip install --user codecov
+  - bundle install --path vendor/bundle/
 after_success:
   - codecov
-
+script:
+  - mvn test
+  - bundle exec cucumber --require src/test/resources/features/step_definitions/ src/test/resources/features
