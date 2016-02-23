@@ -3,7 +3,7 @@
 
 	<groupId>com.github.amarcinkowski</groupId>
 	<artifactId>sparkrestservice</artifactId>
-	<version>0.0.10-SNAPSHOT</version>
+	<version>0.0.12-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>spark-rest-service</name>
