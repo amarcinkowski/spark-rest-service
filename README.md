@@ -1,6 +1,6 @@
 # Company REST [![Build Status](https://travis-ci.org/amarcinkowski/spark-rest-service.svg?branch=master)](https://travis-ci.org/amarcinkowski/spark-rest-service) [![codecov.io](https://codecov.io/github/amarcinkowski/spark-rest-service/coverage.svg?branch=master)](https://codecov.io/github/amarcinkowski/spark-rest-service?branch=master)
 
-This is "Company" REST Web Service with Spark Framework and Angularjs front-end. Below you will find specs
+This is "Company" REST Web Service with Spark Framework and Angularjs front-end. 
 
 ## REST / JSON Queries
 
@@ -12,12 +12,39 @@ This is "Company" REST Web Service with Spark Framework and Angularjs front-end.
 |PUT	|Update/Replace	|N/A 404 (Not Found) |200 (OK) or 204 (No Content). 404 (Not Found), if ID not found or invalid.|
 |DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
 
+### REST URLs
+		POST http://<hostname>/companies - Create new company
+		GET  http://<hostname>/companies - Get a list of all companies
+		GET  http://<hostname>/companies/:id - Get details about a company
+		PUT  http://<hostname>/companies - update a company
+		PUT  http://<hostname>/companies/owners/:id - add beneficial owner(s) of the company
+
+### JSON Format
+###### Company
+**Bold** fields are required, *italics* fields are validated:
+<pre>
+{
+  "companyID": "1",
+  <b>"name": "Company name",</b>
+  <b>"address" : "Address",</b>
+  <b>"city": "City",</b>
+  <b>"country" : "Country",</b>
+  <i>"mail" : "em@il.add.res",</i>
+  <i>"phoneNumber" : "number consisting of digits and chars: +()-",</i>
+  <b>"beneficialOwner" : ["Array", "of", "Beneficial", "Owners"]</b>
+}
+</pre>
+
+###### Owners
+```json
+["Array", "of", "Beneficial", "Owners"]
+```
 ### Examples
 #### 1. Correct requests
 ##### POST new Company - 201 (CREATED)
 ###### cURL Request
 ```bash
-curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "phoneNumber" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
+curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d '{"name" : "IT Services",  "address" : "Armii Krajowej 41",  "city": "Kalisz",  "country" : "Poland",  "mail" : "em@il.add.res", "phoneNumber" : "+48 745634543",  "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]}'
 ```
 ###### JSON
 ```json
@@ -26,6 +53,7 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
   "address" : "Parczewskiego 8",
   "city": "Kalisz",
   "country" : "Poland",
+  "mail" : "em@il.add.res",
   "phoneNumber" : "+48 745634543",
   "beneficialOwner" : ["De vilde Svaner", "Emil i Lönneberga", "Mary Poppins", "Den lille Havfrue"]
 }
