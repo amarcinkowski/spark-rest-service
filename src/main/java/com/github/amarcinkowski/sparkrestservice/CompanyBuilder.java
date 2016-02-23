@@ -8,13 +8,28 @@ import java.util.Set;
  */
 public class CompanyBuilder {
 
+	/** The id. */
 	private Long id;
+	
+	/** The name. */
 	private String name;
+	
+	/** The address. */
 	private String address;
+	
+	/** The city. */
 	private String city;
+	
+	/** The country. */
 	private String country;
+	
+	/** The mail. */
 	private String mail;
+	
+	/** The phone number. */
 	private String phoneNumber;
+	
+	/** The owners. */
 	private Set<String> owners = new HashSet<>();
 
 	/**
@@ -26,8 +41,10 @@ public class CompanyBuilder {
 	/**
 	 * From request.
 	 *
-	 * @param req
-	 *            the req
+	 * @param name the name
+	 * @param address the address
+	 * @param city the city
+	 * @param country the country
 	 * @return the company builder
 	 */
 	public CompanyBuilder required(String name, String address, String city, String country) {
@@ -38,17 +55,36 @@ public class CompanyBuilder {
 		return this;
 	}
 
+	/**
+	 * Id.
+	 *
+	 * @param id the id
+	 * @return the company builder
+	 */
 	public CompanyBuilder id(Long id) {
 		this.id = id;
 		return this;
 	}
 
+	/**
+	 * Additional.
+	 *
+	 * @param mail the mail
+	 * @param phoneNumber the phone number
+	 * @return the company builder
+	 */
 	public CompanyBuilder additional(String mail, String phoneNumber) {
 		this.mail = mail;
 		this.phoneNumber = phoneNumber;
 		return this;
 	}
 
+	/**
+	 * Owners.
+	 *
+	 * @param owners the owners
+	 * @return the company builder
+	 */
 	public CompanyBuilder owners(String... owners) {
 		for (String owner : owners) {
 			this.owners.add(owner);

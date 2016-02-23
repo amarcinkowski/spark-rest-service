@@ -30,10 +30,9 @@ public class CompanyService {
 	/**
 	 * Gets the company.
 	 *
-	 * @param id
-	 *            the id
+	 * @param id            the id
 	 * @return the company
-	 * @throws NoSuchIdException
+	 * @throws NoSuchIdException the no such id exception
 	 */
 	public Company get(Long id) throws NoSuchIdException {
 		if (companies.containsKey(id)) {
@@ -45,10 +44,9 @@ public class CompanyService {
 	/**
 	 * Update company.
 	 *
-	 * @param company
-	 *            the company
-	 * @throws CannotUpdateException
-	 *             the cannot update exception (it may not exist)
+	 * @param company            the company
+	 * @return the company
+	 * @throws CannotUpdateException             the cannot update exception (it may not exist)
 	 */
 	public Company update(Company company) throws CannotUpdateException {
 		if (!companies.containsKey(company.getCompanyID())) {
@@ -61,12 +59,10 @@ public class CompanyService {
 	/**
 	 * Adds the beneficial owner.
 	 *
-	 * @param companyID
-	 *            the company id
-	 * @param owners
-	 *            the name
+	 * @param companyID            the company id
+	 * @param owners            the name
 	 * @return the company
-	 * @throws CannotUpdateException
+	 * @throws CannotUpdateException the cannot update exception
 	 */
 	public Integer addOwners(Long companyID, String... owners) throws CannotUpdateException {
 		Company c = companies.get(companyID);
