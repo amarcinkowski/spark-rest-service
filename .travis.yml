@@ -6,9 +6,12 @@ jdk:
   - oraclejdk8
 before_install:
   - pip install --user codecov
-  - bundle install --path vendor/bundle/
 after_success:
   - codecov
+before_script:
+  - bundle install --path vendor/bundle/
+  - mvn dependency:get -Dartifact=org.seleniumhq.selenium:selenium-server:2.52.0
+  - src/test/resources/selenium.sh
 script:
   - mvn test
   - bundle exec cucumber --require src/test/resources/features/step_definitions/ src/test/resources/features

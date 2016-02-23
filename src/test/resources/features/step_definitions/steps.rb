@@ -5,7 +5,6 @@ require 'json'
 require "rspec"
 require 'spec'
 require 'watir-webdriver'
-include RSpec::Matchers
 
 SITE = "localhost"
 BROWSER = Watir::Browser.start(SITE, :firefox)
