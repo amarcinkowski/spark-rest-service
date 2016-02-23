@@ -141,9 +141,16 @@ curl -v -H "Content-Type: application/json" -X POST localhost:4567/companies -d 
 ##### POST new Company duplicate ID - 409 (CONFLICT)
 ##### GET Company with nonexistent ID - 404 (NOT FOUND)
 ##### PUT update Company with nonexistent ID - 404 (NOT FOUND)
-#### 3. Ommited requests
-DELETE was not specified in requirements.
-
+##### PUT add Owners of Company with nonexistent ID - 404 (NOT FOUND)
+###### cURL Reguest
+```bash
+curl -v -H "Content-Typon" -X PUT localhost:4567/companies/owners/2 -d '["Den grimme Ælling", "Den lille Pige med Svovlstikkerne"]'
+```
+###### Response
+```bash
+< HTTP/1.1 404 Not Found
+< Content-Type: text/html;charset=utf-8
+```
 ## Development
 ### Tools
 * Apache Maven 3.3.3
