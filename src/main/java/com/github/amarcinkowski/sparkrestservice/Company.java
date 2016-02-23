@@ -155,10 +155,20 @@ public class Company {
 		this.country = country;
 	}
 
+	/**
+	 * Gets the mail.
+	 *
+	 * @return the mail
+	 */
 	public String getMail() {
 		return mail;
 	}
 	
+	/**
+	 * Sets the mail.
+	 *
+	 * @param mail the new mail
+	 */
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
@@ -202,10 +212,9 @@ public class Company {
 	}
 
 	/**
-	 * Adds the beneficial owner.
+	 * Adds the beneficial owners.
 	 *
-	 * @param beneficialOwner
-	 *            the beneficial owner
+	 * @param beneficialOwners the beneficial owners
 	 * @return the company
 	 */
 	public Company addBeneficialOwners(String... beneficialOwners) {
