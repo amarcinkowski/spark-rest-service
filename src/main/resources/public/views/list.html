@@ -1,5 +1,5 @@
 <h2>
-	All Companies <a class="btn btn-primary pull-right" href="#/create">Add
+	All Companies <a id="addcompany" class="btn btn-primary pull-right" href="#/create">Add
 		Company</a>
 </h2>
 
@@ -21,6 +21,6 @@
 		<td>{{company.mail}}</td>
 		<td><div ng-repeat="owner in company.beneficialOwner">
 				{{owner}}</div></td>
-		<td><a href="#/companies/{{company.companyID}}">Edit</a> <!-- <a href="#/companies/{{company.companyID}}">Details</a> --></td>
+		<td><a href="#/companies/{{company.companyID}}">Edit</a></td>
 	</tr>
 </table>
