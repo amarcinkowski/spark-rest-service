@@ -9,7 +9,7 @@ require 'watir-webdriver'
 SITE = "localhost"
 BROWSER = Watir::Browser.start(SITE, :firefox)
 PAGES = {
-  "home" => "http://localhost:4567/"
+  "home" => "http://localhost:4568/"
 }
 
 Given(/^I navigate to "([^"]*)"$/) do |arg1|
