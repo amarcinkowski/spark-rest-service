@@ -7,10 +7,10 @@ This is "Company" REST Web Service with Spark Framework and Angularjs front-end.
 ### HTTP methods
 | HTTP Method |	CRUD |	Entire Collection (e.g. /companies) |	Specific Item (e.g. /companies/{id}) |
 |---|---|---|---|---|
-|POST |Create |201 (Created), 'Location' header with link to /customers/{id} containing new ID. 400 (Bad Request) if constraints are violated (missing required fields).|404 (Not Found), 409 (Conflict) if resource already exists..|
-|GET |Read	|200 (OK), list of customers. |200 (OK), single customer. 404 (Not Found), if ID not found or invalid.|
-|PUT	|Update/Replace	|N/A 404 (Not Found) |200 (OK) or 204 (No Content). 404 (Not Found), if ID not found or invalid.|
-|DELETE	|Delete	|N/A 404 (Not Found)	|200 (OK). 404 (Not Found), if ID not found or invalid.|
+|POST |Create |201 (Created), 'Location' header with link to /customers/{id} containing new ID. <br/> 400 (Bad Request) if constraints are violated (missing required fields).|404 (Not Found), <br/>409 (Conflict) if resource already exists..|
+|GET |Read	|200 (OK), list of customers. |200 (OK), single customer. <br/>404 (Not Found), if ID not found or invalid.|
+|PUT	|Update/Replace	|N/A 404 (Not Found) |200 (OK) or 204 (No Content). <br/>404 (Not Found), if ID not found or invalid.|
+|DELETE	|Delete	|N/A 404 (Not Found)	| N/A 200 (OK). 404 (Not Found), if ID not found or invalid.|
 
 ### REST URLs
 		POST http://<hostname>/companies - Create new company
@@ -21,7 +21,7 @@ This is "Company" REST Web Service with Spark Framework and Angularjs front-end.
 
 ### JSON Format
 ###### Company
-**Bold** fields are required, *italics* fields are validated:
+JSON might include companyID, if it doesn't it's generated. **Bold** fields are required, *italics* fields are validated:
 <pre>
 {
   "companyID": "1",
