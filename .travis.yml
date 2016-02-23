@@ -15,6 +15,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "java -jar ~/.m2/repository/org/seleniumhq/selenium/selenium-server/2.52.0/selenium-server-2.52.0.jar > selenium.log 2>&1 &"
   - "java -jar target/sparkrestservice-jar-with-dependencies.jar &"
+  - sleep 2
   - curl localhost:4567/companies
 script:
   - mvn test
