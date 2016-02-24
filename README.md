@@ -1,6 +1,7 @@
 # Company REST [![Build Status](https://travis-ci.org/amarcinkowski/spark-rest-service.svg?branch=master)](https://travis-ci.org/amarcinkowski/spark-rest-service) [![codecov.io](https://codecov.io/github/amarcinkowski/spark-rest-service/coverage.svg?branch=master)](https://codecov.io/github/amarcinkowski/spark-rest-service?branch=master)
 
-This is "Company" REST Web Service with Spark Framework and Angularjs front-end. 
+This is "Company" REST Web Service with Spark Framework and AngularJS front-end. 
+![AngularJS front-end](http://amarcinkowski.github.io/imgs/company-app.png)
 
 ## REST / JSON Queries
 
@@ -18,7 +19,11 @@ This is "Company" REST Web Service with Spark Framework and Angularjs front-end.
 		GET  http://<hostname>/companies/:id - Get details about a company
 		PUT  http://<hostname>/companies - update a company
 		PUT  http://<hostname>/companies/owners/:id - add beneficial owner(s) of the company
-
+### Server side vs client side vaildation
+#### Server side
+![Server side validation](http://amarcinkowski.github.io/imgs/server-validation.png)
+#### Client side
+![Client side validation](http://amarcinkowski.github.io/imgs/client-validation.png)
 ### JSON Format
 ###### Company
 JSON might include companyID, if it doesn't it's generated. **Bold** fields are required, *italics* fields are validated:
