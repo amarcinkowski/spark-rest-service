@@ -19,7 +19,7 @@ This is "Company" REST Web Service with Spark Framework and AngularJS front-end.
 		GET  http://<hostname>/companies/:id - Get details about a company
 		PUT  http://<hostname>/companies - update a company
 		PUT  http://<hostname>/companies/owners/:id - add beneficial owner(s) of the company
-### Server side vs client side vaildation
+### Server side vs client side validation
 #### Server side
 ![Server side validation](http://amarcinkowski.github.io/imgs/server-validation.png)
 #### Client side
