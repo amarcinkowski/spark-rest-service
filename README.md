@@ -3,6 +3,21 @@
 This is "Company" REST Web Service with Spark Framework and AngularJS front-end. 
 ![AngularJS front-end](http://amarcinkowski.github.io/imgs/company-app.png)
 
+## Heroku ready app
+
+With Heroku toolbelt installed deployment is as easy as:
+```bash
+git clone https://github.com/amarcinkowski/spark-rest-service
+cd spark-rest-service
+heroku create
+heroku buildpacks:set heroku/java
+git push heroku master
+```
+now the app may be opened with:
+```bash
+heroku open
+```
+
 ## REST / JSON Queries
 
 ### HTTP methods
