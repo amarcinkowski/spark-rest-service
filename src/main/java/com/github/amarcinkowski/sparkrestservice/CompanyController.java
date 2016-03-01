@@ -7,20 +7,16 @@ import static com.github.amarcinkowski.sparkrestservice.JsonUtil.json;
 import static spark.Spark.after;
 import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.ipAddress;
 import static spark.Spark.port;
 import static spark.Spark.post;
 import static spark.Spark.put;
 import static spark.Spark.staticFileLocation;
 
-import javax.validation.ConstraintViolationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-
-import spark.Request;
-import spark.Response;
 
 /**
  * The Class CompanyController.
@@ -38,7 +34,9 @@ public class CompanyController {
 	 */
 	public CompanyController(final CompanyService service) {
 
-		port(getHerokuAssignedPort());
+		ipAddress(getCloudIP());
+
+		port(getCloudAssignedPort());
 
 		staticFileLocation("/public");
 
@@ -76,15 +74,23 @@ public class CompanyController {
 		});
 	}
 
+	private String getCloudIP() {
+		return "0.0.0.0";
+	}
+
 	/**
 	 * Gets the heroku assigned port.
 	 *
 	 * @return the heroku assigned port
 	 */
-	static int getHerokuAssignedPort() {
+	static int getCloudAssignedPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
+			// Heroku
 			return Integer.parseInt(processBuilder.environment().get("PORT"));
+		} else if (processBuilder.environment().get("OPENSHIFT_DIY_PORT") != null) {
+			// Openshift
+			return Integer.parseInt(processBuilder.environment().get("OPENSHIFT_DIY_PORT"));
 		}
 		return 4567;
 	}
