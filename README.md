@@ -5,7 +5,7 @@ This is "Company" REST Web Service with Spark Framework and AngularJS front-end.
 
 ## Heroku ready app
 
-With Heroku toolbelt installed deployment is as easy as:
+With Heroku-Toolbelt installed deployment is as easy as:
 ```bash
 git clone https://github.com/amarcinkowski/spark-rest-service
 cd spark-rest-service
