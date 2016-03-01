@@ -76,7 +76,7 @@ public class CompanyController {
 
 	private String getCloudIP() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		if (processBuilder.environment().get("PORT") != null) {
+		if (processBuilder.environment().get("OPENSHIFT_DIY_IP") != null) {
 			// Openshift IP
 			return processBuilder.environment().get("OPENSHIFT_DIY_IP");
 		}
