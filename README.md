@@ -3,7 +3,7 @@
 This is "Company" REST Web Service with Spark Framework and AngularJS front-end. 
 ![AngularJS front-end](http://amarcinkowski.github.io/imgs/company-app.png)
 
-## Heroku ready app
+## Heroku deployment
 
 With Heroku-Toolbelt installed deployment is as easy as:
 ```bash
@@ -25,7 +25,7 @@ To easily push your changes to Openshift server add a git remote to the app:
 ```bash
 git remote add openshift -f <openshift-git-repo>
 ```
-Now commited change are pushed with:
+Now commited changes are pushed with:
 ```bash
 git push openshift master
 ```
