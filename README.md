@@ -3,6 +3,21 @@
 This is "Company" REST Web Service with Spark Framework and AngularJS front-end. 
 ![AngularJS front-end](http://amarcinkowski.github.io/imgs/company-app.png)
 
+## Heroku ready app
+
+With Heroku-Toolbelt installed deployment is as easy as:
+```bash
+git clone https://github.com/amarcinkowski/spark-rest-service
+cd spark-rest-service
+heroku create
+heroku buildpacks:set heroku/java
+git push heroku master
+```
+now the app may be opened with:
+```bash
+heroku open
+```
+
 ## REST / JSON Queries
 
 ### HTTP methods
@@ -19,7 +34,7 @@ This is "Company" REST Web Service with Spark Framework and AngularJS front-end.
 		GET  http://<hostname>/companies/:id - Get details about a company
 		PUT  http://<hostname>/companies - update a company
 		PUT  http://<hostname>/companies/owners/:id - add beneficial owner(s) of the company
-### Server side vs client side vaildation
+### Server side vs client side validation
 #### Server side
 ![Server side validation](http://amarcinkowski.github.io/imgs/server-validation.png)
 #### Client side
