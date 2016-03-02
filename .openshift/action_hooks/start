@@ -1,7 +1,9 @@
 #!/bin/bash
 export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0
 export PATH=$JAVA_HOME/bin:$PATH
+export PORT=${OPENSHIFT_DIY_PORT} 
+export IPADDRESS=${OPENSHIFT_DIY_IP}
 
 $OPENSHIFT_DATA_DIR/apache-maven-3.3.3/bin/mvn -f $OPENSHIFT_REPO_DIR/pom.xml clean package -DskipTests -s $OPENSHIFT_REPO_DIR/.openshift/settings.xml
 
-nohup java -jar -DPORT=${OPENSHIFT_DIY_PORT} -DIPADDRESS=${OPENSHIFT_DIY_IP} $OPENSHIFT_REPO_DIR/target/sparkrestservice-jar-with-dependencies.jar > ${OPENSHIFT_DIY_LOG_DIR}/java8.log 2>&1 &
+nohup java -jar $OPENSHIFT_REPO_DIR/target/sparkrestservice-jar-with-dependencies.jar > ${OPENSHIFT_DIY_LOG_DIR}/java8.log 2>&1 &
