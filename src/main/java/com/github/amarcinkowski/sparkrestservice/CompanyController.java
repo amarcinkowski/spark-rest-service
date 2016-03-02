@@ -76,9 +76,9 @@ public class CompanyController {
 
 	private String getCloudIP() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
-		if (processBuilder.environment().get("OPENSHIFT_DIY_IP") != null) {
+		if (processBuilder.environment().get("IPADDRESS") != null) {
 			// Openshift IP
-			return processBuilder.environment().get("OPENSHIFT_DIY_IP");
+			return processBuilder.environment().get("IPADDRESS");
 		}
 		return "0.0.0.0";
 	}
@@ -91,11 +91,8 @@ public class CompanyController {
 	static int getCloudAssignedPort() {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		if (processBuilder.environment().get("PORT") != null) {
-			// Heroku
+			// Heroku & OpenShift
 			return Integer.parseInt(processBuilder.environment().get("PORT"));
-		} else if (processBuilder.environment().get("OPENSHIFT_DIY_PORT") != null) {
-			// Openshift
-			return Integer.parseInt(processBuilder.environment().get("OPENSHIFT_DIY_PORT"));
 		}
 		return 4567;
 	}
